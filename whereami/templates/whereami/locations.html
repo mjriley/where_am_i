@@ -1,0 +1,15 @@
+<table>
+    {% for user in users %}
+        <tr>
+            <td>{{ user }}</td>
+            {% if user.location %}
+                <td>{{ user.location.city_name }}</td>
+                <td>{{ user.location.country_name }}</td>
+                <td>{{ user.location.latitude }}</td>
+                <td>{{ user.location.longitude }}</td>
+            {% else %}
+                <td>Location Unknown</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+</table>

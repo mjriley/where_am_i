@@ -1,0 +1,16 @@
+<h1>Update Location</h1>
+{% if error %}
+<h2>{{ error }}</h2>
+{% endif %}
+<form action="process_location" method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td><label>Email:</label><input type="email" name="email" /></td>
+            <td><label>City</label><input type="text" name="city" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Update Location" /></td>
+        </tr>
+    </table>
+</form>
