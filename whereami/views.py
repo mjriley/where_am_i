@@ -38,6 +38,8 @@ def process_location(request):
     # TODO -- fetch username/password from the environment
     api = GeoNamesAPI(username='dimagi')
     retrieved_location = api.get_location(city)
+    if retrieved_location is None:
+        return render(request, 'whereami/location_form.html', {'error': f'no valid locations found for: {city}'})
 
     location = user.update_location(retrieved_location)
 

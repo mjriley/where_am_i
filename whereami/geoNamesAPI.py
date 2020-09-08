@@ -1,6 +1,9 @@
 import requests
 
 
+NAMES_LIST_KEY = 'geonames'
+
+
 class GeoNamesAPI():
     BASE_URL = 'http://api.geonames.org/search'
 
@@ -11,7 +14,12 @@ class GeoNamesAPI():
         response = requests.get(self.BASE_URL, params={
                                 'name': city, 'username': self._username, 'maxRows': 10, 'type': 'json'})
         response_json = response.json()
-        best_location = response_json['geonames'][0]
+
+        if len(response_json[NAMES_LIST_KEY]) == 0:
+            # no valid results found
+            return None
+
+        best_location = response_json[NAMES_LIST_KEY][0]
 
         return {
             'name': best_location['name'],
