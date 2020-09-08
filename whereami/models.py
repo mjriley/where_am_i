@@ -17,7 +17,7 @@ class User(models.Model):
     def get_current_location(self):
         return Location.objects.filter(user=self.id, current=True).first()
 
-    def update_location(self, location):
+    def update_location(self, location, time=None):
         # Ensure this is a transaction
         # Fetch the current location
         prev_location = self.get_current_location()
@@ -27,8 +27,10 @@ class User(models.Model):
             prev_location.save()
 
         # Insert the new location as current
+        if time is None:
+            time = timezone.now()
         return Location.objects.create(user=self, city_name=location['name'], country_name=location['country'],
-                                       latitude=location['latitude'], longitude=location['longitude'])
+                                       latitude=location['latitude'], longitude=location['longitude'], time=time)
 
 
 class Location(models.Model):
